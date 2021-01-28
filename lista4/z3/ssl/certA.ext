@@ -1,0 +1,14 @@
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = poczta.pwr.wroc.pl
+DNS.2 = www.poczta.pwr.wroc.pl
+DNS.3 = poczta.pwr.edu.pl
+DNS.4 = www.poczta.pwr.edu.pl
+DNS.5 = www.moj.serwer.pl
+DNS.6 = e.pwr.edu.pl
+DNS.7 = www.e.pwr.edu.pl
+

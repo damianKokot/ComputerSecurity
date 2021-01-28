@@ -1,0 +1,18 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<h3>Potwierdź wprowadzone informacje!</h3>
+<p>Konto adresata: {{transaction.reciever}}</p>
+<p>Wiadomość: {{transaction.message}}</p>
+<p>Kwota: {{transaction.amount}}</p>
+
+<form action="/transaction/new/confirm" method="POST">
+  {% csrf_token %}
+  <input type="text" value="{{transaction.reciever}}" name="reciever" style="display:none">
+  <input type="number" value="{{transaction.amount}}" name="amount" style="display:none">
+  <input type="text" value="{{transaction.message}}" name="message" style="display:none">
+  <button type="submit" class="btn btn-primary">Potwierdź</button>
+  <a class="btn btn-danger" href="/dashboard">Anuluj transakcję</a>
+</form>
+
+{% endblock %}

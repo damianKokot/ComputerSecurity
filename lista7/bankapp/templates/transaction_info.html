@@ -1,0 +1,27 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<h3>Szczegóły transakcji:</h3>
+<p class="from-account">
+  Od:
+  {% if transaction.from_account.user.username == request.user.username %}
+    {{ transaction.from_account.user.username }}
+  {% else %}
+    {{ transaction.from_account.account_number }}
+  {% endif %}
+</p>
+
+<p class="to-account">
+  Do: 
+  {% if transaction.to_account.user.username == request.user.username %}
+    {{ transaction.to_account.user.username }}
+  {% else %}
+    {{ transaction.to_account.account_number }}
+  {% endif %}
+</p>
+
+<p>Kwota: {{transaction.amount}} zł</p>
+<p>Wiadomość: {{transaction.message}}</p>
+<p>Data: {{transaction.date}}</p>
+<a href="/dashboard" class="btn btn-primary">Wróć</a>
+{% endblock %}

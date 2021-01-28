@@ -1,0 +1,60 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<h5>
+  {% csrf_token %}
+  Jesteś zalogowany jako {{ request.user.username }}.
+  <a href="accounts/logout">Wyloguj</a>
+</h5>
+<h6>Numer konta: {{request.user.useraccount.account_number}}</h6>
+<h6>Saldo konta: {{request.user.useraccount.balance}}</h6>
+<a href="/transaction/new" class="btn btn-primary">Nowy przelew</a>
+<h2>
+  Historia transakcji
+</h2>
+
+<form method="GET">
+  <label for="id_username">Username:</label>
+  <br>
+  <input type="text" name="username" id="id_username" value="{% firstof username '' %}" >
+  <br>
+  <button type="submit" formnovalidate="" class="btn btn-primary">Filter</button>
+</form>
+<br>
+<br>
+<br>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Od</th>
+      <th scope="col">Do</th>
+      <th scope="col">Data</th>
+      <th scope="col">Kwota</th>
+      <th scope="col">Wiadomość</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for transaction in transactions %}
+    <tr>
+      {% if transaction.from_account.user.username == request.user.username %}
+        <td class="from-account">{{ transaction.from_account.user.username }}</td>
+      {% else %}
+        <td class="from-account">{{ transaction.from_account.account_number }}</td>
+      {% endif %}
+
+      {% if transaction.to_account.user.username == request.user.username %}
+        <td class="to-account">{{ transaction.to_account.user.username }}</td>
+      {% else %}
+        <td class="to-account">{{ transaction.to_account.account_number }}</td>
+      {% endif %}
+
+      <td>{{ transaction.date }}</td>
+      <td>{{ transaction.amount }}</td>
+      <td>{{ transaction.message }}</td>
+      <td> <a href="/transaction/{{transaction.id}}">Pokaż więcej</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
